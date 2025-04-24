@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TTD Auto-Fill Script Generator</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    .person-form { margin-bottom: 15px; border: 1px solid #ccc; padding: 10px; border-radius: 5px; }
+    label { display: block; margin-top: 5px; }
+    textarea { width: 100%; height: 300px; margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <h2>TTD Auto-Fill Script Generator</h2>
+
+  <label for="count">How many people? (1-6)</label>
+  <select id="count" onchange="renderForms()">
+    <option value="">Select</option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+    <option value="6">6</option>
+  </select>
+
+  <div id="formsContainer"></div>
+  <button onclick="generateScript()">Generate Script</button>
+  <button onclick="copyScript()">Copy to Clipboard</button>
+  <textarea id="output" readonly></textarea>
+
+  <script>
+    function renderForms() {
+      const count = +document.getElementById('count').value;
+      const container = document.getElementById('formsContainer');
+      container.innerHTML = '';
+      for (let i = 0; i < count; i++) {
+        container.innerHTML += `
+          <div class="person-form">
+            <h4>Person ${i + 1}</h4>
+            <label>Name: <input type="text" id="name${i}"></label>
+            <label>Age: <input type="text" id="age${i}"></label>
+            <label>ID Number: <input type="text" id="idNumber${i}"></label>
+            <label>Gender: 
+              <select id="gender${i}">
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Transgender">Transgender</option>
+              </select>
+            </label>
+            <label>ID Type: 
+              <select id="idType${i}">
+                <option value="Aadhaar Card">Aadhaar Card</option>
+                <option value="Passport">Passport</option>
+              </select>
+            </label>
+          </div>
+        `;
+      }
+    }
+
+    function generateScript() {
+      const count = +document.getElementById('count').value;
+      let peopleArray = [];
+      for (let i = 0; i < count; i++) {
+        peopleArray.push({
+          name: document.getElementById(`name${i}`).value,
+          age: document.getElementById(`age${i}`).value,
+          idNumber: document.getElementById(`idNumber${i}`).value,
+          gender: document.getElementById(`gender${i}`).value,
+          idType: document.getElementById(`idType${i}`).value,
+        });
+      }
+
+      const script = `
+(async function () {
+  const people = ${JSON.stringify(peopleArray, null, 2)};
+
+  const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+  const setNativeValue = (element, value) => {
+    const lastValue = element.value;
+    element.value = value;
+    const event = new Event('input', { bubbles: true });
+    const tracker = element._valueTracker;
+    if (tracker) tracker.setValue(lastValue);
+    element.dispatchEvent(event);
+  };
+
+  const clickDropdownOption = async (optionText) => {
+    await wait(300);
+    const options = [...document.querySelectorAll('div, li, span')];
+    const match = options.find(el =>
+      el.textContent.trim().toLowerCase() === optionText.toLowerCase() &&
+      el.offsetParent !== null
+    );
+    if (match) match.click();
+  };
+
+  for (let i = 0; i < people.length; i++) {
+    const person = people[i];
+
+    const nameField = document.querySelector(\`input[name="fname"][id="\${i}"]\`);
+    const ageField = document.querySelector(\`input[name="age"][id="\${i}"]\`);
+    if (nameField && ageField) {
+      setNativeValue(nameField, person.name);
+      setNativeValue(ageField, person.age);
+    }
+
+    const idTypeField = document.querySelector(\`input[name="photoIdType"][id="\${i}"]\`);
+    if (idTypeField) {
+      idTypeField.click();
+      await clickDropdownOption(person.idType);
+    }
+
+    const idNumberField = document.querySelector(\`input[name="idProofNumber"][id="\${i}"]\`);
+    if (idNumberField) {
+      idNumberField.removeAttribute('disabled');
+      setNativeValue(idNumberField, person.idNumber);
+    }
+
+    const genderField = document.querySelector(\`input[name="gender"][id="\${i}"]\`);
+    if (genderField) {
+      genderField.click();
+      await clickDropdownOption(person.gender);
+    }
+
+    await wait(600);
+  }
+})();`;
+
+      document.getElementById('output').value = script;
+    }
+
+    function copyScript() {
+      const textarea = document.getElementById('output');
+      textarea.select();
+      document.execCommand('copy');
+      alert('Script copied to clipboard!');
+    }
+  </script>
+</body>
+</html>
