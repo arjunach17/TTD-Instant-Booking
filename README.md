@@ -1,40 +1,34 @@
-TTD Auto-Fill Script Generator
-This project is a simple HTML + JavaScript utility that helps generate an auto-fill script for TTD (Tirumala Tirupati Devasthanams) booking forms.
-Instead of manually typing details for multiple people, this tool creates a customized script to automatically fill in Name, Age, Gender, ID Type, and ID Number for up to 6 people.
+Here is a complete, copy‑paste ready README.md you can use for your repository.
 
-✨ Features
-✅ Enter details for 1 to 6 people
-✅ Inputs for:
-Name
-Age
-Gender (Male/Female/Transgender)
-ID Type (Aadhaar, Passport, etc.)
-ID Number
+# TTD Auto-Fill Script Generator
 
-✅ Auto-generates a ready-to-use JavaScript script
-✅ “Copy to Clipboard” functionality for quick usage
-✅ Designed for convenience when booking tickets on the TTD website
-📂 Project Structure
-text
-TTD-AutoFill-Generator/
-│── index.html        # Main application
-│── README.md         # Documentation
-🚀 How to Use
-Open index.html in your browser.
-Select the number of people (1–6).
-Fill in the details for each person:
-Name
-Age
-Gender
-ID Type
-ID Number
-Click Generate Script – a JavaScript snippet will be created.
-Use Copy to Clipboard to copy the script.
-On the TTD booking form page, paste the copied script into your browser’s Developer Console (F12 → Console → Paste → Enter).
-Watc the page auto-fill with your details 🎉
-📜 Example
-If you fill details for 2 people:
-json
+A lightweight HTML + JavaScript utility that generates a customized script to auto‑fill the TTD (Tirumala Tirupati Devasthanams) booking form for up to 6 people, helping you save time during high‑demand booking windows.
+
+### Features
+- Enter details for 1–6 people with dynamic form sections.
+- Inputs include Name, Age, Gender (Male/Female/Transgender), ID Type (Aadhaar, Passport, etc.), and ID Number.
+- Generates a ready‑to‑use JavaScript snippet tailored to your entries.
+- One‑click “Copy to Clipboard” to paste into the browser console on the TTD booking page.
+- Intended for personal convenience while respecting official booking policies.
+
+### Project structure
+```
+TTD-Instant-Booking/
+├── index.html   # Main application
+├── README.md    # Documentation
+```
+
+### How to use
+- Open index.html in any modern web browser.
+- Select how many people you want to auto‑fill (between 1 and 6).
+- Fill in each person’s Name, Age, Gender, ID Type, and ID Number.
+- Click “Generate Script” to produce a customized JavaScript snippet.
+- Click “Copy to Clipboard” to copy the snippet.
+- On the official TTD booking form page, open Developer Tools → Console (F12 → Console), paste the code, and press Enter to auto‑fill the form.
+
+### Example
+If you fill details for 2 people, your data might look like:
+```json
 [
   {
     "name": "Ravi Kumar",
@@ -51,8 +45,9 @@ json
     "idType": "Passport"
   }
 ]
-The tool generates a script like:
-js
+```
+The tool generates a script that iterates over people and maps fields to the TTD form inputs.
+```js
 (async function () {
   const people = [
     {
@@ -73,29 +68,27 @@ js
 
   // === Script logic to auto-fill the TTD form ===
   const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
-  const setNativeValue = (element, value) => { ... };
-  const clickDropdownOption = async (optionText) => { ... };
+  const setNativeValue = (element, value) => { /* sets value and dispatches events */ };
+  const clickDropdownOption = async (optionText) => { /* selects option by text */ };
 
   for (let i = 0; i < people.length; i++) {
     const person = people[i];
-    // Field mapping and auto-fill logic
+    // Map "person" fields to corresponding TTD inputs and fill them
   }
 })();
+```
 
-⚠️ Disclaimer
-This tool is created for personal convenience only.
-It is not affiliated with TTD or any government service.
-Do not misuse this for bulk booking, unfair means, or automation beyond personal use.
-Always respect TTD’s official booking policies.
+### Disclaimer
+This tool is for personal convenience only and is not affiliated with TTD or any government service.
+Do not misuse this for bulk booking, unfair means, or automation beyond personal use, and always follow TTD’s official booking policies.[9]
 
-🛠️ Tech Stack
-HTML5 – Structure
-CSS3 – Styling
-Vanilla JavaScript – Logic & Script Generation
-📌 Future Improvements
-Add support for more ID types
-Save pre-filled data in browser local storage
-Provide a one-click auto-run bookmarklet
+### Tech stack
+- HTML5 for structure.
+- CSS3 for styling.
+- Vanilla JavaScript for logic and script generation.
 
-🙏 Credits
-Developed for devotees of Lord Venkateswara to save time while booking.
+
+
+
+Developed to help devotees of Lord Venkateswara save time while booking, with a simple, no‑framework approach for ease of use.
+
