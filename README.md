@@ -1,4 +1,4 @@
-Here is a complete, copy‑paste ready README.md you can use for your repository.
+Tirupati tickets fill up in seconds! Don’t lose your chance,use this auto-fill tool to complete your booking instantly
 
 # TTD Auto-Fill Script Generator
 
@@ -80,7 +80,7 @@ The tool generates a script that iterates over people and maps fields to the TTD
 
 ### Disclaimer
 This tool is for personal convenience only and is not affiliated with TTD or any government service.
-Do not misuse this for bulk booking, unfair means, or automation beyond personal use, and always follow TTD’s official booking policies.[9]
+Do not misuse this for bulk booking, unfair means, or automation beyond personal use, and always follow TTD’s official booking policies.
 
 ### Tech stack
 - HTML5 for structure.
